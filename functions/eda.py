@@ -353,7 +353,6 @@ def heatmap_orders_per_city_per_hour(heatmap_data):
     plt.ylabel('City')
     plt.title('Hourly Distribution of Orders per Location')
     
-    # save the image
     # save image
     plt.savefig('./images/eda/5.location_analysis/Hourly Distribution of Orders per Location.png', bbox_inches='tight')
     
@@ -363,7 +362,7 @@ def heatmap_orders_per_city_per_hour(heatmap_data):
 
 
 # function to plot the comparison between location and avg delivery cost
-def location_vs_delivery_costs(orders_per_city,orders_per_city_del_cost):
+def location_vs_delivery_costs(orders_per_city, orders_per_city_del_cost):
     
     # create the time series plot
     fig, ax1 = plt.subplots(figsize=(20, 10), dpi=100, facecolor='white')
@@ -375,29 +374,33 @@ def location_vs_delivery_costs(orders_per_city,orders_per_city_del_cost):
     # barplot
     ax1.bar(orders_per_city.index, orders_per_city['order_id'], \
             label='Orders', color=orders_color, alpha=0.7)
+        
     ax1.set_xlabel('City')
-    ax1.set_ylabel('Orders', color=orders_color)  # Set the label and color for the primary y-axis
-    ax1.tick_params(axis='y', labelcolor=orders_color)  # Set the color of the y-axis ticks
+    ax1.set_ylabel('Orders')  
+    ax1.tick_params(axis='y')
     
-    # create a secondary y-axis for lineplot
+    # Add legend for the bar plot
+    ax1.legend(loc='upper right',bbox_to_anchor=(1,0.95)) 
+    
+    # create a secondary y-axis for line plot
     ax2 = ax1.twinx()
     ax2.plot(orders_per_city_del_cost.index, orders_per_city_del_cost['delivery_cost'],\
             label='Avg Delivery Cost', color=delivery_cost_color, marker='o', linestyle='-', alpha=0.7, linewidth=2)
     
-    ax2.set_ylabel('Avg Delivery Cost', color=delivery_cost_color)  # Set the label and color for the secondary y-axis
-    ax2.tick_params(axis='y', labelcolor=delivery_cost_color)  # Set the color of the y-axis ticks
+    ax2.set_ylabel('Avg Delivery Cost')  
+    ax2.tick_params(axis='y')  
+    ax2.legend()
     
-    #define title
+    # Define title
     plt.title('Total Orders ~ Location vs Avg Delivery Cost')
-    plt.legend().remove()
     
-    # rotate x-axis labels for better readability
+    # Rotate x-axis labels for better readability
     plt.xticks(rotation=90)
     
-    # ensure all elements fit in the plot
+    # Ensure all elements fit in the plot
     plt.tight_layout()
     
-    # save the image
+    # Save the image
     plt.savefig('./images/eda/5.location_analysis/Total Orders ~ Location vs Avg Delivery Cost.png', bbox_inches='tight')
     
     plt.show()
@@ -564,28 +567,26 @@ def delivery_cost_vs_orders_per_class(delivery_costs_classes):
     # create the time series plot
     fig, ax1 = plt.subplots(figsize=(15, 8), dpi=100, facecolor='white')
     
-    # set distinct colors for "Orders" and "Delivery Cost"
-    orders_color = 'blue'
-    delivery_cost_color = 'red'
-    
     # barplot
     ax1.bar(delivery_costs_classes.index, delivery_costs_classes['order_id'], \
-            label='Orders', color=orders_color, alpha=0.7)
+            label='Orders', color='blue', alpha=0.7)
+    
     ax1.set_xlabel('Classes')
-    ax1.set_ylabel('Orders', color=orders_color)  
-    ax1.tick_params(axis='y', labelcolor=orders_color)  
+    ax1.set_ylabel('Orders')  
+    ax1.tick_params(axis='y')
+    ax1.legend(loc='upper right',bbox_to_anchor=(1,0.95)) 
     
     # create a secondary y-axis for lineplot
     ax2 = ax1.twinx()
     ax2.plot(delivery_costs_classes.index, delivery_costs_classes['delivery_cost'],\
-            label='Avg Delivery Cost', color=delivery_cost_color, marker='o', linestyle='-', alpha=0.7)
+            label='Avg Delivery Cost', color='red', marker='o', linestyle='-', alpha=0.7)
     
-    ax2.set_ylabel('Avg Delivery Cost', color=delivery_cost_color)  
-    ax2.tick_params(axis='y', labelcolor=delivery_cost_color)  
+    ax2.set_ylabel('Avg Delivery Cost')  
+    ax2.tick_params(axis='y')     
+    ax2.legend()
     
     # define title
     plt.title('Orders vs Avg Delivery Cost per Class')
-    plt.legend().remove()
     
     # rotate x-axis labels for better readability
     plt.xticks(rotation=90)
